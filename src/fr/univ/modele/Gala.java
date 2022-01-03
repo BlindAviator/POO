@@ -312,7 +312,7 @@ public class Gala implements Serializable {
                                                              "places en tant que membre du personnel.");
 
             // Find a table with enough seats to receive the reservation
-            List<Table> staffTables = getStaffTables(); // TODO Explain this line to Momo
+            List<Table> staffTables = getStaffTables(); 
             for(Table table : staffTables) {
                 if(table.getSeatsRemaining() >= nbrAccompanist + 1) {
                     tableId = table.getTableId();
