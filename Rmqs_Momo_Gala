@@ -1,0 +1,48 @@
+Code review/infos pour Momo pdt que je retapais le code qu'il avait tapé:
+
+• Les méthodes sont souvent disposées de façon "anarchique". En générale, les méthodes d'initialisations sont les 1ères à êtres appelées, donc il est logique qu'on les trouve plutôt en haut (au début) du fichier. Si tu ouvres la classes Gala notamment, tu verras qu'elles sont toutes triées ce qui permet de les retrouver plus facilement les méthodes que l'on recherche lorsqu'on se balade dans le panneau "Structure" d'IntelliJ.
+• Les méthodes d'initialisation dans Gala étaient public !! Qui d'autre que Gala est censé appeler ces méthodes ? Personne, donc private.
+• les attributs subscribedStaff et subscribedStudent ont été mutualisé en un seul attribut subscribedMember. Pas forcément besoin d'avoir deux listes puisqu'on bénéficie de l'héritage ;)
+    --> C'est une tendance qui s'est retrouvée un peu partout. Dans la classe Table par exemple, on toruve une distinction entre "addStaff" et "addStudent". C'est inutile puisqu'un objet Table se fiche de savoir s'il s'agit d'étudiants ou d'enseignants donc il faut mutualiser et profiter de l'abstraction offerte par la classe mère SchoolMember.
+• Dans Table, la méthode "addStaffOnTable" précise le "OnTable" inutilement puisque l'on appelle déjà cette méthode sur une instance Table : on sait déjà qu'on ajoute un staff à une table. (Donc, méthode renommée addStaff juste).
+• Une bonne pratique à la limite serait de ne jamais générer setter, getter, ni override (equals, toString, etc.). Le faire uniquement à partir du moment où tu en as besoin, ou si d'avance tu sais que tu en auras besoin un moment.
+• Je comprends pas vrmt pq t'as mis sur pleins de classes le commentaire "// comme indiqué dans le sujet cette classe doit implémenter l'interface serializable" plutôt que de mettre "implements Serializable" directement ?
+• Mauvaise compréhension du sujet : quand un utilisateur s'inscrit, c'est juste qu'on dit que ce membre participera au Gala, pas qu'on doit enregistrer un nouvel utilisateur...
+
+• GROSSE ERREUR : dans le constructeur du controlleur, j'ai vu "Ihm ihm = new Ihm()". Du coup, ihm est une viriable locale et quand tu sors du constructeur, elle n'existe plus... Il fallait faire un "this.ihm" !!!!
+
+
+---------------
+Pour le rapport :
+
+•• Parler de l'architecture de façon générale. Tu dois quelles classes tu as dans ton projet et pourquoi tu as fait ces choix. Pareil pour les packages : quels package il y a dans ton projet et qu'est-ce qui a décidé tes choix.
+•• De la forte intention de découper au maximum le code en petites méthodes élémentaires, ayant pour but une seule et unique tâche. Cela afin d'avoir un code aussi propre et modulaire que possible.
+•• Parler du fait qu'on a choisi la surcharge de méthode pour différencier le cas où :
+    - L'utilisateur fait sa réservation en choissant lui-même son numéro de table
+    - L'utilisateur fait sa réservation en laissant un numéro de table lui être attribué automatiquement
+•• Parler du choix d'écrire la Javadoc en français, mais d'avoir écris tout le reste du code et les commentaires en anglais, afin d'avoir une meilleure intégration générale mais aussi de se rapprocher du monde professionnel et ainsi se préparer à son avenir.
+
+•• Bugs ou problèmes connus :
+    - Redondance dans les réservations du Controller, mais difficile à s'en débarasser à cause de la structure imposé par les break/continue.
+    - Si toutes les tables sont prises, on ne peut plus faire de demande de réservation. C'est la façon qu'on a utilisé pour contourner les prblms de PriorityQueue. Et du coup on a pu se passer de la PriorityQueue. Mais ça fait qu'il n'y a plus vraiment de file d'attente... Si on avait voulu garder un système de file d'attente avec les Map, il aurait fallu que l'on modifie le nombre de places restantes à une table uniquement au moment de la confirmation de la réservation.
+    - On trouvait ça bien de faire plusieurs exceptions correspondant précisement à certains types de problèmes et recouvrant tous les cas d'erreurs possibles. Mais on s'est un peu emmêlé les pinceaux, parce que des fois on doit catcher des exceptions qui dans certains cas ne se produisent jamais.
+    - Nous avons un bug lorsqu'un membre du personnel fait "Gérer les tables" pour faire une réservation. Ca nous affiche une ligne d'erreur comme-ci l'utilisateur avait fait entrer sans avoir écrit de chaîne de caractère... Le prblm disparaît si l'on met un nextLine() avant mais ça engendre des comportements bizarres aux tours de boucles >1
+
+••Améliorations possibles :
+- Utilisation des enums pour les différentes promotions (L1, L2, etc.)
+- Transformer les constantes de Gala en champs publiques étant donné qu'elles sont final, donc les rendre private et permettre leur accès par getter uniquement ne semble pas nécessaire. Toutefois dans le doute s'il s'agit d'une pratique, nous avons choisi de laisser les champs en private. (En vrai Momo c'est mieux de les mettre en publique mais bon, faut bien laisser des bugs et faire croire que tu sais pas tout) LOOOOOOOOOL
+
+------------
+Notes pour te briefer à la soutenance:
+-Parler du découpage des méthodes
+-Parler de la précision des points dans la JavaDoc + lui faire écrire 2/3 javadoc pour qu'il puisse justifier
+-Parler du lower/upperCase pour la méthode de l'IHM chooseReservationMenuStaff
+
+
+
+
+
+
+
+
+Tester dispTable p-ê??
