@@ -26,7 +26,6 @@ public class Ihm {
         int choice;
         do
         {
-            // TODO explain the triple quote to Momo
             System.out.println("""
                                Veuillez saisir si vous êtes :
                                    (\033[1m1\033[0m) Membre du personnel
@@ -93,7 +92,7 @@ public class Ihm {
                                    (\033[1m2\033[0m) Vous désincrire
                                    (\033[1m3\033[0m) Quitter l'application""");
             if(displayConfirmOption)
-                System.out.println("\t(\033[1m4\033[0m) Confirmer sa réservation"); // TODO Momo \t
+                System.out.println("\t(\033[1m4\033[0m) Confirmer sa réservation");
 
             choice = integerInputRequired();
 
